@@ -13,5 +13,4 @@ public class MemberForm {
         this.name = name;
     }
 
-
 }
