@@ -1,6 +1,7 @@
 package com.jpabook.jpashop.service;
 
 
+import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.domain.item.Item;
 import com.jpabook.jpashop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
