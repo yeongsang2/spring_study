@@ -30,12 +30,18 @@ public class Category {
     private List<Item> items = new ArrayList<>();
 
     // self 연관관계 매핑
-    @ManyToOne // 내부모니까 many TO One
+    @ManyToOne(fetch = FetchType.LAZY) // 내부모니까 many TO One
     @JoinColumn(name="parent_id")
     private Category parent;
 
     @OneToMany(mappedBy = "parent")
     private List<Category> child = new ArrayList<>();
 
+    // 양방향 편의 메소드
+    public void addChildCategory(Category child){
 
+        this.child.add(child); // 자식 추가
+        child.setParent(this); // 부모 설정
+
+    }
 }

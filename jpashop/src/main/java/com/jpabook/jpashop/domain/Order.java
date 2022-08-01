@@ -19,15 +19,15 @@ public class Order {
     @Column(name="order_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id") // 어느 column과 매핑
     private Member member;
 
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItemList = new ArrayList<>();
+    @OneToMany(mappedBy = "order",cascade = CascadeType.ALL) //orderItems 에 데이터를 넣어두고 order을 저장하면 orderitems도 자동 저장
+    private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)  //order저장시 delivery도 persist 됨
     @JoinColumn(name = "delivery_id") // 연관관계의 주인  order 테이블에서 delivery_id foreign key 관리
     private Delivery delivery;
 
@@ -36,6 +36,23 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status; //[ORDER, CANCEL]
 
+
+    //연관관계 편의 메소드  --> 양방향시, 핵심적으로 로직 control? 하는 쪽이 들고 있기
+    public void setMember(Member member){
+        this.member = member;
+        member.getOrders().add(this);
+    }
+
+    public void addOrderItems(OrderItem orderItem){ // 비즈니스 로직상?>
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
+
+    public void setDelivery(Delivery delivery){
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
+    // 연관관계 편의 메소드
 
 
 }
