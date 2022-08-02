@@ -2,6 +2,7 @@ package com.jpabook.jpashop.service;
 
 
 import com.jpabook.jpashop.domain.Order;
+import com.jpabook.jpashop.domain.item.Book;
 import com.jpabook.jpashop.domain.item.Item;
 import com.jpabook.jpashop.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,18 @@ public class ItemService {
     @Transactional
     public void saveItem(Item item){
         itemRepository.save(item);
+    }
+
+    @Transactional //transaction commit -> flush
+    public void updateItem(Long itemId, UpdateItemDto itemDto){
+
+        Item findItem = itemRepository.findOne(itemId);
+
+        findItem.setPrice(itemDto.getPrice());
+        findItem.setName(itemDto.getName());
+        findItem.setStockQuantity(itemDto.getStockQuantity());
+        //findItem에 update method 만들기?
+        // find.change(name, price, stockQuantity)
     }
 
     public List<Item> findItem(){
