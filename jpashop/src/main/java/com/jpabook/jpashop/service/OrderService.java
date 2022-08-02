@@ -8,10 +8,13 @@ import com.jpabook.jpashop.domain.item.Item;
 import com.jpabook.jpashop.repository.ItemRepository;
 import com.jpabook.jpashop.repository.MemberRepository;
 import com.jpabook.jpashop.repository.OrderRepository;
+import com.jpabook.jpashop.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)
@@ -55,9 +58,10 @@ public class OrderService {
         order.cancel(); // update query 따로 날리지 않아도 됨 jpa 개쩌네 우왕 ㅎㄷ;
     }
 
-    //검색
-//    public List<Order> findOrder(OrderSearch orderSearch){
+
+    public List<Order> findOrder(OrderSearch orderSearch){
 //        return orderRepository.findAll(orderSearch);
-//    }
+        return orderRepository.findAllByCriteria(orderSearch);
+    }
 
 }
