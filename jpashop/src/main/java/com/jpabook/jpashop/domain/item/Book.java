@@ -13,4 +13,6 @@ public class Book extends Item{
 
     private String author;
     private String isbn;
+
+    //static 생성자 만들기
 }
