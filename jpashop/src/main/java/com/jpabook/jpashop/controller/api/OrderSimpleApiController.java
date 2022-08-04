@@ -6,6 +6,7 @@ import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.domain.OrderStatus;
 import com.jpabook.jpashop.repository.OrderRepository;
 import com.jpabook.jpashop.repository.OrderSearch;
+import com.jpabook.jpashop.repository.OrderSimpleQueryDto;
 import com.jpabook.jpashop.service.MemberService;
 import com.jpabook.jpashop.service.OrderService;
 import lombok.Data;
@@ -58,6 +59,11 @@ public class OrderSimpleApiController {
         return orderRepository.findAllWithMemberDelivery().stream()
                 .map(SimpleOrderDto::new)
                 .collect(toList());
+    }
+    @GetMapping("/api/v4/simple-orders")
+    public List<OrderSimpleQueryDto> ordersV4(){
+        List<OrderSimpleQueryDto> result = orderRepository.findOrderDto();
+        return result;
     }
 
 //    public List<Order> ordersV1(){
